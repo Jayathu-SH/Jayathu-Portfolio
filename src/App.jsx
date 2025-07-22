@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   FaEnvelope,
   FaPhone,
@@ -18,6 +18,7 @@ import {
 import { FiExternalLink } from 'react-icons/fi';
 import { GiBrain } from 'react-icons/gi';
 import { MdSmartphone } from 'react-icons/md';
+import jaye from './assets/jaye.jpg'
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -148,7 +149,7 @@ const App = () => {
                 <h1 className="text-5xl lg:text-7xl font-bold">
                   <span className="block">Hello, I'm</span>
                   <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600 bg-clip-text text-transparent">
-                    Alex Johnson
+                    Jayathu Sanka
                   </span>
                 </h1>
                 <p className="text-xl lg:text-2xl text-gray-300">
@@ -162,11 +163,11 @@ const App = () => {
               <div className="flex flex-wrap gap-4">
                 <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
                   <FaDownload className="w-5 h-5" />
-                  Download Resume
+                    Download Resume
                 </button>
                 <button className="border border-purple-500 hover:bg-purple-500/20 px-8 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2">
                   <FaEye className="w-5 h-5" />
-                  View Work
+                    View Work
                 </button>
               </div>
             </div>
@@ -174,8 +175,8 @@ const App = () => {
               <div className="relative">
                 <div className="w-80 h-80 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur-3xl opacity-30 absolute -top-10 -left-10"></div>
                 <div className="w-72 h-72 bg-gradient-to-br from-gray-800 to-purple-900 rounded-full flex items-center justify-center relative overflow-hidden border-4 border-purple-500/30">
-                  <div className="w-64 h-64 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full flex items-center justify-center">
-                    <div className="text-6xl">👨‍💻</div>
+                  <div className="w-64 h-64 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full overflow-hidden relative">
+                    <img src={jaye} alt="" className="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
@@ -394,7 +395,7 @@ const App = () => {
                   </div>
                   <div>
                     <div className="font-semibold">Email</div>
-                    <div className="text-gray-400">alex.johnson@email.com</div>
+                    <div className="text-gray-400">shjayathusanka@gmail.com</div>
                   </div>
                 </div>
                 
@@ -404,7 +405,7 @@ const App = () => {
                   </div>
                   <div>
                     <div className="font-semibold">Phone</div>
-                    <div className="text-gray-400">+1 (555) 123-4567</div>
+                    <div className="text-gray-400">+9474 137 70 70</div>
                   </div>
                 </div>
                 
@@ -414,16 +415,16 @@ const App = () => {
                   </div>
                   <div>
                     <div className="font-semibold">Location</div>
-                    <div className="text-gray-400">San Francisco, CA</div>
+                    <div className="text-gray-400">Akuressa, Sri Lanka</div>
                   </div>
                 </div>
               </div>
 
               <div className="flex gap-4">
-                <a href="#" className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                <a href="https://github.com/Jayathu-SH" className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
                   <FaGithub className="w-6 h-6" />
                 </a>
-                <a href="#" className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                <a href="https://www.linkedin.com/in/jayathu-sanka" className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
                   <FaLinkedin className="w-6 h-6" />
                 </a>
               </div>
