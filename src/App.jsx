@@ -13,7 +13,9 @@ import {
   FaCalendarAlt,
   FaArrowRight,
   FaDownload,
-  FaEye
+  FaEye,
+  FaBars,
+  FaTimes
 } from 'react-icons/fa';
 import { FiExternalLink } from 'react-icons/fi';
 import { GiBrain } from 'react-icons/gi';
@@ -23,6 +25,7 @@ import jaye from './assets/jaye.jpg'
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isVisible, setIsVisible] = useState({});
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -31,7 +34,15 @@ const App = () => {
           ...prev,
           [entry.target.id]: entry.isIntersecting
         }));
+        
+        // Update active section based on what's currently visible
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
       });
+    }, {
+      threshold: 0.6, // Section needs to be 60% visible to be considered active
+      rootMargin: '-50px 0px' // Account for fixed navbar
     });
 
     document.querySelectorAll('section[id]').forEach((section) => {
@@ -40,6 +51,23 @@ const App = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  // Smooth scroll function
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const navbarHeight = 80; // Approximate navbar height
+      const targetPosition = element.offsetTop - navbarHeight;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+      
+      // Close mobile menu if open
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   const skills = [
     { name: 'React', level: 95, icon: <FaCode className="w-5 h-5" /> },
@@ -123,11 +151,13 @@ const App = () => {
             <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               Portfolio
             </div>
+            
+            {/* Desktop Menu */}
             <div className="hidden md:flex space-x-8">
               {['Home', 'About', 'Skills', 'Projects', 'Experience', 'Contact'].map((item) => (
                 <button
                   key={item}
-                  onClick={() => setActiveSection(item.toLowerCase())}
+                  onClick={() => scrollToSection(item.toLowerCase())}
                   className={`hover:text-purple-400 transition-colors ${
                     activeSection === item.toLowerCase() ? 'text-purple-400' : 'text-gray-300'
                   }`}
@@ -136,7 +166,36 @@ const App = () => {
                 </button>
               ))}
             </div>
+            
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-gray-300 hover:text-purple-400 transition-colors"
+              >
+                {isMobileMenuOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
+          
+          {/* Mobile Menu */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-md border-b border-purple-500/20">
+              <div className="px-4 py-4 space-y-2">
+                {['Home', 'About', 'Skills', 'Projects', 'Experience', 'Contact'].map((item) => (
+                  <button
+                    key={item}
+                    onClick={() => scrollToSection(item.toLowerCase())}
+                    className={`block w-full text-left px-4 py-3 rounded-lg hover:bg-purple-500/20 transition-colors ${
+                      activeSection === item.toLowerCase() ? 'text-purple-400 bg-purple-500/10' : 'text-gray-300'
+                    }`}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
@@ -165,7 +224,10 @@ const App = () => {
                   <FaDownload className="w-5 h-5" />
                     Download Resume
                 </button>
-                <button className="border border-purple-500 hover:bg-purple-500/20 px-8 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2">
+                <button 
+                  onClick={() => scrollToSection('projects')}
+                  className="border border-purple-500 hover:bg-purple-500/20 px-8 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2"
+                >
                   <FaEye className="w-5 h-5" />
                     View Work
                 </button>
@@ -248,7 +310,7 @@ const App = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {skills.map((skill, index) => (
+            {skills.map((skill) => (
               <div key={skill.name} className="space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="text-purple-400">{skill.icon}</div>
@@ -349,7 +411,7 @@ const App = () => {
 
           <div className="space-y-8">
             {experiences.map((exp, index) => (
-              <div key={index} className="relative">
+              <div key={`${exp.company}-${exp.period}`} className="relative">
                 <div className="flex items-start gap-6">
                   <div className="flex-shrink-0">
                     <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
